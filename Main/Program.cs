@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Main.Model;
 
 namespace Main
@@ -11,17 +7,14 @@ namespace Main
     {
         static void Main(string[] args)
         {
-            var list = new Model.LinkedList<int>();
+            var list = new LinkedList<int>();
             /// добавляю значения от 1 до 10
             for (int i = 0; i < 11; i++)
             {
                 list.Add(i);
             }
-            /// вывожу список
-            foreach(var item in list)
-            {
-                Console.Write(item + " ");
-            }
+
+            ListPrinter.Print(list);
 
             Console.WriteLine();
             /// добавляю значение
@@ -33,13 +26,12 @@ namespace Main
             /// Длина списка
             Console.WriteLine(list.Count);
 
-            //Item<string> test = new Item<string>("sdswf");
-            //list.Add(test);
+            list.InsertAfter(10, 5678);
+            
+            ListPrinter.Print(list);
 
-            foreach (var item in list)
-            {
-                Console.Write(item + " ");
-            }
+            list.FindElement(0);
+            
             Console.WriteLine();
 
             Console.ReadLine();

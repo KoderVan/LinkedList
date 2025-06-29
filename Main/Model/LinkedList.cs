@@ -1,39 +1,26 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 
 namespace Main.Model
 {
-    internal class LinkedList<T> : IEnumerable
+    public class LinkedList<T> : IEnumerable
     {
-        /// <summary>
         /// Первый элемент списка
-        /// </summary>
         public Item<T> Head { get; private set; }
-        /// <summary>
         /// Последний элемент списка
-        /// </summary>
         public Item<T> Tail { get; private set; }
         public int Count { get; private set; }
-        /// <summary>
         /// Создать пустой спиок
-        /// </summary>
         public LinkedList()
         {
             Clear();
         }
-        /// <summary>
         /// Создать список с начальным элементом
-        /// </summary>
         public LinkedList(T data)
         {
             SetHeadAndTail(data);
         }
-        /// <summary>
         /// Добавить данные в конец списка
-        /// </summary>
         public void Add(T data)
         {
             if (Tail != null)
@@ -48,9 +35,7 @@ namespace Main.Model
                 SetHeadAndTail(data);
             }
         }
-        /// <summary>
         /// Удалить первое вхождение в списке
-        /// </summary>
         public void Delete(T data)
         {
             if (Head != null)
@@ -66,7 +51,6 @@ namespace Main.Model
 
                 while (current != null)
                 {
-
                     if (current.Data.Equals(data))
                     {
                         previous.Next = current.Next;
@@ -80,7 +64,7 @@ namespace Main.Model
             }
             else
             {
-                SetHeadAndTail(data);
+                Console.WriteLine("Такого элемента в списке нет");
             }
         }
         private void SetHeadAndTail(T data)
@@ -90,9 +74,7 @@ namespace Main.Model
             Tail = item;
             Count = 1;
         }
-        /// <summary>
         /// Добавить данные в начало списка
-        /// </summary>
         public void AppendHead(T data)
         {
             var item = new Item<T>(data);
@@ -100,9 +82,7 @@ namespace Main.Model
             Head = item;
             Count++;
         }
-        /// <summary>
         /// Вставить элемент после другого элемента
-        /// </summary>
         public void InsertAfter(T target, T data)
         {
             if (Head != null)
@@ -115,8 +95,18 @@ namespace Main.Model
                     if (current.Data.Equals(target))
                     {
                         var item = new Item<T>(data);
-                        item.Next = current.Next;
-                        current.Next = item;
+                        if (current.Next == null)
+                        {
+                            current.Next = item;
+                            item.Next = null;
+                            Tail = item;
+
+                        }
+                        else
+                        {
+                            item.Next = current.Next;
+                            current.Next = item;
+                        }
                         Count++;
                         return;
                     }
@@ -127,10 +117,7 @@ namespace Main.Model
                 }
             }
         }
-
-        /// <summary>
         /// Очистить список
-        /// </summary>
         public void Clear()
         {
             Head = null;
@@ -146,9 +133,7 @@ namespace Main.Model
                 current = current.Next;
             }
         }
-        /// <summary>
         /// Изменить имеющееся значение
-        /// </summary>
         public void AlterData(T target, T data)
         {
             if (Head != null)
@@ -169,6 +154,33 @@ namespace Main.Model
             }
         }
 
+        public void FindElement(T target)
+        {
+            if (Head != null)
+            {
+                var current = Head;
+                while (current != null)
+                {
+                    
+                    if (current.Data.Equals(target))
+                    {
+                        Console.WriteLine($"\ntarget Head: {current}");
+                        Console.WriteLine($"target Next: {current.Next}");
+                        return;
+                    }
+                    else
+                    {
+                        current = current.Next;
+                    }
+                    
+                }
+                Console.WriteLine("Такого элемента нет в списке");
+            }
+            else
+            {
+                Console.WriteLine("Список пуст");
+            }
+        }
         public override string ToString()
         {
             return "Linked List " + Count + " elements"; 
